@@ -1,0 +1,67 @@
+{
+  "levels": {
+    "level_1": {
+      "walls": [
+        [[200, 180], [500, 180], [255, 0, 0]],
+        [[570, 0], [540, 240], [255, 255, 0]],
+        [[220, 530],[180, 180], [255, 255, 255]],
+        [[430, 200], [220, 380], [0, 255, 255]],
+        [[630, 380], [200, 300], [0, 0, 255]],
+        [[680, 320], [600, 440], [255, 0, 255]],
+        [[-100, 600], [1280, 600], [255, 0, 0]]
+      ]
+    }
+  },
+  "sprites": [
+    {
+      "name": "Squirrel",
+      "class": "GameSprite",
+      "group": "sprite_group",
+      "position": [100, 100],
+      "controller": ["environment", 0],
+      "physics": [2, 0.65, 0.1, 0.2],
+
+      "GameSpriteInterface": {
+        "set_animations_left_right": [
+          "squirrel.png",
+          "squirrel_animations.json"
+        ],
+        "set_animation_machine": "squirrel_machine.json",
+        "set_state_handler": "squirrel_state_handler"
+      }
+    }
+  ],
+
+  "layers": [
+    {
+      "name": "environment",
+      "class": "GameLayer",
+      "groups": "sprite_group",
+
+      "ControllerInterface": {
+        "load_controllers": "64_controller.json",
+        "set_controller_commands": [0, "squirrel_commands_stick.json"]
+      },
+
+      "PlatformerInterface": {
+        "set_sprite_layer": ["Sprite Layer", "sprite_group"],
+        "set_camera_layer": "Camera Layer",
+        "set_collision_layer": ["Collision Layer", "level_1"],
+        "set_hud_layer": "Debug Layer"
+      }
+    },
+
+    {
+      "name": "Debug Layer",
+      "class": "Layer",
+      "groups": "hud_group",
+
+      "DebugInterface": {
+        "set_sprite_state_hud": ["Squirrel", 5],
+        "set_event_stream_hud": [
+          ["Squirrel", "spawn", "wall_collision"]
+        ]
+      }
+    }
+  ]
+}
